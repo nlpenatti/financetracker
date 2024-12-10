@@ -371,7 +371,7 @@ class ControleFinanceiro {
     }
 
     configurarNavegacao() {
-        // Configurar navegação desktop
+        // Configurar navegação desktop e mobile
         document.querySelectorAll('.nav-links a, .menu-mobile a').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -380,12 +380,21 @@ class ControleFinanceiro {
             });
         });
 
+        // Configurar clique no perfil
+        const perfilLink = document.querySelector('a[href="#perfil"]');
+        if (perfilLink) {
+            perfilLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.navegarPara('perfil');
+            });
+        }
+
         // Iniciar na página dashboard
         this.navegarPara('dashboard');
     }
 
     navegarPara(pagina) {
-        // Atualizar menu desktop
+        // Atualizar menu desktop e mobile
         document.querySelectorAll('.nav-links a, .menu-mobile a').forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href') === `#${pagina}`) {
@@ -399,9 +408,14 @@ class ControleFinanceiro {
 
     carregarPagina() {
         const container = document.querySelector('main');
+        if (!container) return;
+
         let conteudo = '';
 
         switch (this.paginaAtual) {
+            case 'perfil':
+                conteudo = this.renderizarPerfil(); // Certifique-se de que este método existe
+                break;
             case 'dashboard':
                 conteudo = this.renderizarDashboard();
                 break;
@@ -413,9 +427,6 @@ class ControleFinanceiro {
                 break;
             case 'orcamento':
                 conteudo = this.renderizarOrcamento();
-                break;
-            case 'perfil':
-                conteudo = this.renderizarPerfil();
                 break;
         }
 
@@ -432,6 +443,50 @@ class ControleFinanceiro {
                         <i class="fas fa-plus"></i> Nova Transação
                     </button>
                 </div>
+
+                <!-- Formulário de Nova Transação -->
+                <form id="form-transacao" class="form-card hidden">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="descricao">Descrição</label>
+                            <input type="text" id="descricao" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="valor">Valor</label>
+                            <input type="number" id="valor" step="0.01" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="tipo">Tipo</label>
+                            <select id="tipo" required>
+                                <option value="receita">Receita</option>
+                                <option value="despesa">Despesa</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="categoria">Categoria</label>
+                            <select id="categoria" required>
+                                <option value="salario">Salário</option>
+                                <option value="alimentacao">Alimentação</option>
+                                <option value="transporte">Transporte</option>
+                                <option value="moradia">Moradia</option>
+                                <option value="lazer">Lazer</option>
+                                <option value="outros">Outros</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="data">Data</label>
+                            <input type="date" id="data" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-check"></i> Salvar
+                        </button>
+                        <button type="button" class="btn-secondary" id="btn-cancelar">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                    </div>
+                </form>
 
                 <div class="filtros-wrapper">
                     <div class="filtros-grid">
@@ -1048,7 +1103,7 @@ class ControleFinanceiro {
         container.innerHTML = `
             <section class="perfil-page">
                 <div class="section-header">
-                    <h2>Configurações</h2>
+                    <h2>Configurações de Perfil</h2>
                 </div>
 
                 <div class="configuracoes-grid">
@@ -1082,24 +1137,10 @@ class ControleFinanceiro {
                             </div>
                             <div class="form-field">
                                 <label>Tema</label>
-                                <select id="perfil-tema" onchange="controle.alternarTema()">
+                                <select id="perfil-tema">
                                     <option value="light">Claro</option>
                                     <option value="dark">Escuro</option>
                                 </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="config-card">
-                        <h3>Backup de Dados</h3>
-                        <div class="form-card">
-                            <div class="backup-options">
-                                <button class="btn-primary" onclick="controle.exportarDados()">
-                                    <i class="fas fa-download"></i> Exportar Dados
-                                </button>
-                                <button class="btn-secondary" onclick="controle.importarDados()">
-                                    <i class="fas fa-upload"></i> Importar Dados
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -1114,7 +1155,8 @@ class ControleFinanceiro {
                 e.preventDefault();
                 const dados = {
                     nome: document.getElementById('perfil-nome').value,
-                    email: document.getElementById('perfil-email').value
+                    email: document.getElementById('perfil-email').value,
+                    moeda: moedaSelect.value
                 };
                 this.salvarPerfil(dados);
                 this.mostrarNotificacao('Perfil atualizado com sucesso!', 'sucesso');
@@ -1132,8 +1174,8 @@ class ControleFinanceiro {
         if (moedaSelect) {
             moedaSelect.value = this.perfil.moeda;
             moedaSelect.addEventListener('change', (e) => {
-                this.salvarPerfil({ moeda: e.target.value });
-                this.mostrarNotificacao('Moeda atualizada com sucesso!', 'sucesso');
+                this.salvarPerfil({ moeda: moedaSelect.value });
+                this.atualizarDashboard();
             });
         }
     }
