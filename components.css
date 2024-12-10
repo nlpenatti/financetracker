@@ -374,7 +374,6 @@ footer {
     font-size: 2.8rem !important;
     font-weight: 700;
     background: var(--gradiente-primario);
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 1rem 0;
     letter-spacing: -0.02em;
@@ -384,13 +383,11 @@ footer {
 
 .card-overview.receitas-card .card-value {
     background: var(--gradiente-green);
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .card-overview.despesas-card .card-value {
     background: var(--gradiente-red);
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -587,7 +584,6 @@ footer {
     font-size: 2.5rem !important;
     font-weight: 700 !important;
     background: var(--gradiente-primario);
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.02em;
     line-height: 1.2;
@@ -595,13 +591,11 @@ footer {
 
 .valor-destaque.positivo {
     background: var(--gradiente-green);
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .valor-destaque.negativo {
     background: var(--gradiente-red);
-    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
