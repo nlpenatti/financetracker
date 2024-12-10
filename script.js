@@ -376,18 +376,45 @@ class ControleFinanceiro {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const pagina = e.currentTarget.getAttribute('href').replace('#', '');
+                
+                // Remove active de todos os links
+                document.querySelectorAll('.nav-links a, .menu-mobile a').forEach(l => {
+                    l.classList.remove('active');
+                });
+                
+                // Adiciona active ao link clicado (tanto no desktop quanto no mobile)
+                document.querySelectorAll(`a[href="#${pagina}"]`).forEach(l => {
+                    l.classList.add('active');
+                });
+
                 this.navegarPara(pagina);
             });
         });
 
-        // Configurar clique no perfil
-        const perfilLink = document.querySelector('a[href="#perfil"]');
-        if (perfilLink) {
-            perfilLink.addEventListener('click', (e) => {
+        // Configurar clique no perfil do menu do usuário
+        const perfilLinks = document.querySelectorAll('a[href="#perfil"]');
+        perfilLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
                 e.preventDefault();
+                // Remove active de todos os links
+                document.querySelectorAll('.nav-links a, .menu-mobile a').forEach(l => {
+                    l.classList.remove('active');
+                });
+                
+                // Adiciona active aos links de perfil
+                perfilLinks.forEach(l => {
+                    l.classList.add('active');
+                });
+                
                 this.navegarPara('perfil');
+                
+                // Fecha o dropdown do usuário se estiver aberto
+                const userDropdown = document.getElementById('user-dropdown');
+                if (userDropdown) {
+                    userDropdown.classList.add('hidden');
+                }
             });
-        }
+        });
 
         // Iniciar na página dashboard
         this.navegarPara('dashboard');
