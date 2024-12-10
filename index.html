@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanceTracker - Controle Financeiro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.css">
+</head>
+<body>
+    <!-- Sidebar Desktop -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-wallet"></i>
+            <span>FinanceTracker</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#dashboard" class="active" data-tooltip="Visão Geral">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#transacoes" data-tooltip="Gerenciar Transações">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Transações</span>
+            </a>
+            <a href="#relatorios" data-tooltip="Análise Detalhada">
+                <i class="fas fa-chart-bar"></i>
+                <span>Relatórios</span>
+            </a>
+            <a href="#orcamento" data-tooltip="Controle de Gastos">
+                <i class="fas fa-piggy-bank"></i>
+                <span>Orçamento</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button id="theme-toggle" class="icon-button" data-tooltip="Alternar Tema">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="user-menu" class="icon-button" data-tooltip="Configurações">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Menu Mobile -->
+    <nav class="menu-mobile">
+        <a href="#dashboard" class="active">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="#transacoes">
+            <i class="fas fa-exchange-alt"></i>
+            <span>Transações</span>
+        </a>
+        <a href="#relatorios">
+            <i class="fas fa-chart-bar"></i>
+            <span>Relatórios</span>
+        </a>
+        <a href="#orcamento">
+            <i class="fas fa-piggy-bank"></i>
+            <span>Orçamento</span>
+        </a>
+    </nav>
+
+    <!-- Menu do Usuário -->
+    <div id="user-dropdown" class="dropdown hidden">
+        <div class="dropdown-content">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>Usuário</span>
+            </div>
+            <a href="#perfil">
+                <i class="fas fa-cog"></i>
+                Configurações
+            </a>
+            <a href="#backup">
+                <i class="fas fa-download"></i>
+                Backup de Dados
+            </a>
+            <a href="#ajuda">
+                <i class="fas fa-question-circle"></i>
+                Ajuda
+            </a>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="content-wrapper">
+        <div class="container">
+            <main>
+                <!-- O conteúdo será carregado dinamicamente via JavaScript -->
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>FinanceTracker</h4>
+                <p>Seu controle financeiro simplificado</p>
+            </div>
+            <div class="footer-section">
+                <h4>Links Úteis</h4>
+                <a href="#sobre">Sobre Nós</a>
+                <a href="#termos">Termos de Uso</a>
+                <a href="#privacidade">Política de Privacidade</a>
+            </div>
+            <div class="footer-section">
+                <h4>Redes Sociais</h4>
+                <div class="social-links">
+                    <a href="#" data-tooltip="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" data-tooltip="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" data-tooltip="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 FinanceTracker. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Backup -->
+    <div id="modal-backup" class="modal hidden">
+        <div class="modal-content">
+            <h3>Backup de Dados</h3>
+            <p>Escolha uma opção para gerenciar seus dados:</p>
+            <div class="backup-options">
+                <button class="btn-primary" onclick="controle.exportarDados()">
+                    <i class="fas fa-download"></i> Exportar Dados
+                </button>
+                <button class="btn-secondary" onclick="controle.importarDados()">
+                    <i class="fas fa-upload"></i> Importar Dados
+                </button>
+            </div>
+            <input type="file" id="import-file" accept=".json" class="hidden">
+            <button class="btn-secondary" onclick="document.getElementById('modal-backup').classList.add('hidden')">
+                Fechar
+            </button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
